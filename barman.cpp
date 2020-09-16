@@ -4,6 +4,10 @@
 #include <json.hpp>
 #include <QListWidget>
 #include <QMessageBox>
+#include <mongocxx/v_noabi/mongocxx/client.hpp>
+#include <mongocxx/v_noabi/mongocxx/stdx.hpp>
+#include <mongocxx/v_noabi/mongocxx/uri.hpp>
+#include <mongocxx/v_noabi/mongocxx/instance.hpp>
 
 using json = nlohmann::json;
 
@@ -85,9 +89,8 @@ void Barman::on_pushButton_clicked()
 
 
 
-void Barman::on_listWidget_itemClicked(QListWidgetItem *item)
+void Barman::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
-    QMessageBox msgBox;
     std::string stringText = space2underscore(item->text().toStdString());
     const char *c_str2 = stringText.c_str();
     char url[200] = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
@@ -96,6 +99,7 @@ void Barman::on_listWidget_itemClicked(QListWidgetItem *item)
     json j = json::parse(res.toStdString());
     std::string name = j["drinks"][0]["strDrink"];
     std::string instructions = j["drinks"][0]["strInstructions"];
-    msgBox.setText(QString::fromStdString(name)+"\n"+QString::fromStdString(instructions));
-    msgBox.exec();
+    std::string imgUrl = j["drinks"][0]["strDrinkThumb"];
+    drinkInfo = new class drinkInfo(this, QString::fromStdString(name), QString::fromStdString(instructions),QString::fromStdString(imgUrl));
+    drinkInfo->show();
 }

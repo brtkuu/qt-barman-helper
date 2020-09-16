@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QListWidgetItem>
+#include <drinkinfo.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Barman; }
@@ -20,9 +21,10 @@ private slots:
     void on_pushButton_clicked();
 
 
-    void on_listWidget_itemClicked(QListWidgetItem *item);
+    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 
 private:
     Ui::Barman *ui;
+    drinkInfo *drinkInfo;
 };
 #endif // BARMAN_H
