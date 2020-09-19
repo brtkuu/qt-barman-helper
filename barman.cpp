@@ -4,10 +4,8 @@
 #include <json.hpp>
 #include <QListWidget>
 #include <QMessageBox>
-#include <mongocxx/v_noabi/mongocxx/client.hpp>
-#include <mongocxx/v_noabi/mongocxx/stdx.hpp>
-#include <mongocxx/v_noabi/mongocxx/uri.hpp>
-#include <mongocxx/v_noabi/mongocxx/instance.hpp>
+#include <string.h>
+
 
 using json = nlohmann::json;
 
@@ -100,6 +98,15 @@ void Barman::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
     std::string name = j["drinks"][0]["strDrink"];
     std::string instructions = j["drinks"][0]["strInstructions"];
     std::string imgUrl = j["drinks"][0]["strDrinkThumb"];
-    drinkInfo = new class drinkInfo(this, QString::fromStdString(name), QString::fromStdString(instructions),QString::fromStdString(imgUrl));
+    QString ingredients = "";
+    for(int i=1; i<=3; i++ ){
+        std::string iStr = std::to_string(i);
+        std::string ingredient = j["drinks"][0]["strIngredient"+iStr];
+        ingredients += QString::fromStdString(ingredient);
+        ingredients += "-";
+        ingredients += QString::fromStdString(j["drinks"][0]["strMeasure"+iStr]);
+        ingredients += "\n";
+    }
+    drinkInfo = new class drinkInfo(this, QString::fromStdString(name), QString::fromStdString(instructions),QString::fromStdString(imgUrl), ingredients);
     drinkInfo->show();
 }

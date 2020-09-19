@@ -2,7 +2,7 @@ QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++17
+CONFIG += c++11
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -12,25 +12,34 @@ SOURCES += \
     drinkinfo.cpp \
     login.cpp \
     main.cpp \
-    barman.cpp
+    barman.cpp \
+    register.cpp
 
 HEADERS += \
     barman.h \
     drinkinfo.h \
     json.hpp \
-    login.h
+    login.h \
+    register.h
 
 FORMS += \
     barman.ui \
     drinkinfo.ui \
-    login.ui
+    login.ui \
+    register.ui
 
 INCLUDEPATH += /usr/local/cellar/curl/7.72.0/include
-INCLUDEPATH += /usr/local/cellar/mongo-cxx-driver/3.6.0/include
+INCLUDEPATH += /usr/local/Cellar/mongo-cxx-driver/3.6.0/include
 
 LIBS += \
--lcurl
--ljson
+    -lcurl
+    -ljson
+
+LIBS += \
+     -L/usr/local/lib \
+     -lmongocxx \
+     -lbsoncxx
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

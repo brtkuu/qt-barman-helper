@@ -5,7 +5,7 @@
 #include <QNetworkReply>
 
 
-drinkInfo::drinkInfo(QWidget *parent, QString name, QString instructions, QString url) :
+drinkInfo::drinkInfo(QWidget *parent, QString name, QString instructions, QString url, QString ingredients) :
     QDialog(parent),
     ui(new Ui::drinkInfo)
 {
@@ -14,11 +14,12 @@ drinkInfo::drinkInfo(QWidget *parent, QString name, QString instructions, QStrin
     ui->instructions->setPlainText(instructions);
     ui->instructions->setReadOnly(true);
     std::string strAvatarUrl = url.toUtf8().constData();
+    ui->plainTextEdit->setPlainText(ingredients);
+    ui->plainTextEdit->setReadOnly(true);
     QLabel *lable = ui->label;
     QUrl urlCB(QString().fromStdString(strAvatarUrl));
     QNetworkAccessManager manager;
     QEventLoop loop;
-
     QNetworkReply *reply = manager.get(QNetworkRequest(urlCB));
     QObject::connect(reply, &QNetworkReply::finished, &loop, [&reply, &lable,&loop](){
      if (reply->error() == QNetworkReply::NoError)

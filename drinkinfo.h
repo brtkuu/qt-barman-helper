@@ -12,7 +12,7 @@ class drinkInfo : public QDialog
     Q_OBJECT
 
 public:
-    explicit drinkInfo(QWidget *parent = nullptr, QString name = "", QString instructions = "", QString url = "");
+    explicit drinkInfo(QWidget *parent = nullptr, QString name = "", QString instructions = "", QString url = "", QString ingredients = "");
     ~drinkInfo();
 
 private:
