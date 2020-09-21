@@ -1,3 +1,3 @@
 # Barman helper createt with Qt
 
-Studies project writed in C++
+Studies project wrote in C++
