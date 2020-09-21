@@ -12,21 +12,21 @@ SOURCES += \
     drinkinfo.cpp \
     login.cpp \
     main.cpp \
-    barman.cpp \
-    register.cpp
+    barman.cpp
+
 
 HEADERS += \
     barman.h \
     drinkinfo.h \
     json.hpp \
-    login.h \
-    register.h
+    login.h
+
 
 FORMS += \
     barman.ui \
     drinkinfo.ui \
     login.ui \
-    register.ui
+
 
 INCLUDEPATH += /usr/local/cellar/curl/7.72.0/include
 INCLUDEPATH += /usr/local/Cellar/mongo-cxx-driver/3.6.0/include

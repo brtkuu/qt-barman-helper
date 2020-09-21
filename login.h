@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include <barman.h>
-#include <register.h>
 
 namespace Ui {
 class Login;
@@ -22,12 +21,15 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_pushButton_3_clicked();
+
+    void clearEdits();
+
 private:
     Ui::Login *ui;
 
     Barman *barman;
 
-    Register *registerView;
 };
 
 #endif // LOGIN_H
