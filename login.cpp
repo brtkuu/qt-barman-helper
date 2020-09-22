@@ -18,12 +18,15 @@ using json = nlohmann::json;
 using bsoncxx::builder::basic::kvp;
 using bsoncxx::builder::basic::make_document;
 
-mongocxx::instance instance{}; // This should be done only once.
+
+// Connect with local mongo database
+mongocxx::instance instance{};
 mongocxx::uri uri("mongodb://localhost:27017");
 mongocxx::client client(uri);
 mongocxx::database db = client["barmandb"];
 mongocxx::collection loginColl = db["login"];
 
+// Create mongo querry document
 bsoncxx::document::value createDoc(std::string username, std::string password) {
     auto builder = bsoncxx::builder::stream::document{};
     bsoncxx::document::value doc_value = builder
@@ -39,11 +42,12 @@ Login::Login(QWidget *parent) :
     ui(new Ui::Login)
 {
     ui->setupUi(this);
+    // Set password edit lines
     ui->lineEdit_2->setEchoMode(QLineEdit::Password);
     ui->lineEdit_4->setEchoMode(QLineEdit::Password);
     ui->lineEdit_5->setEchoMode(QLineEdit::Password);
 }
-
+// Clear all edit lines in add/delete user form
 void Login::clearEdits() {
     ui->lineEdit_3->setText("");
     ui->lineEdit_4->setText("");
@@ -56,9 +60,9 @@ Login::~Login()
     delete ui;
 }
 
+// Login button
 void Login::on_pushButton_clicked()
 {
-
     std::string login = ui->lineEdit->text().toStdString();
     std::string passwd = ui->lineEdit_2->text().toStdString();
     bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
@@ -81,6 +85,7 @@ void Login::on_pushButton_clicked()
     }
 }
 
+// Add button
 void Login::on_pushButton_2_clicked()
 {
     std::string username = ui->lineEdit_3->text().toStdString();
@@ -111,6 +116,7 @@ void Login::on_pushButton_2_clicked()
     }
 }
 
+//Delete button
 void Login::on_pushButton_3_clicked()
 {
     std::string username = ui->lineEdit_3->text().toStdString();

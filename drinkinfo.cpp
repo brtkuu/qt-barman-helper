@@ -10,9 +10,9 @@ drinkInfo::drinkInfo(QWidget *parent, QString name, QString instructions, QStrin
     ui(new Ui::drinkInfo)
 {
     ui->setupUi(this);
-    ui->drinkName->setText(name);
-    ui->instructions->setPlainText(instructions);
-    ui->instructions->setReadOnly(true);
+    ui->drinkName->setText(name); //Set title
+    ui->instructions->setPlainText(instructions); // Set instruction
+    ui->instructions->setReadOnly(true); //Change browserWindow on read only
     std::string strAvatarUrl = url.toUtf8().constData();
     ui->plainTextEdit->setPlainText(ingredients);
     ui->plainTextEdit->setReadOnly(true);
@@ -21,7 +21,7 @@ drinkInfo::drinkInfo(QWidget *parent, QString name, QString instructions, QStrin
     QNetworkAccessManager manager;
     QEventLoop loop;
     QNetworkReply *reply = manager.get(QNetworkRequest(urlCB));
-    QObject::connect(reply, &QNetworkReply::finished, &loop, [&reply, &lable,&loop](){
+    QObject::connect(reply, &QNetworkReply::finished, &loop, [&reply, &lable,&loop](){ //Getting image without download it
      if (reply->error() == QNetworkReply::NoError)
      {
          QByteArray jpegData = reply->readAll();
@@ -31,7 +31,7 @@ drinkInfo::drinkInfo(QWidget *parent, QString name, QString instructions, QStrin
          if (!pixmap.isNull())
          {
              lable->clear();
-             lable->setPixmap(pixmap);
+             lable->setPixmap(pixmap); //Set image
              lable->setScaledContents(true);
          }
      }

@@ -14,7 +14,8 @@ size_t writeFunction(void* ptr, size_t size, size_t nmemb, std::string* data) {
     return size * nmemb;
 }
 
-QString getRequest(char* url){
+// Get response from coctail api
+QString getResponse(char* url){
     CURL* curl;
     QString response;
     curl_global_init(CURL_GLOBAL_DEFAULT);
@@ -22,16 +23,10 @@ QString getRequest(char* url){
     std::string response_string;
     if (curl) {
         curl_easy_setopt(curl, CURLOPT_URL, url);
-        curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1L);
-        curl_easy_setopt(curl, CURLOPT_MAXREDIRS, 50L);
-        curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1L);
-        curl_easy_setopt(curl, CURLOPT_XOAUTH2_BEARER, "WZMYAGdjYMbkkVpM0D25jGym3zO7ZQMd");
 
         std::string response_string;
-        std::string header_string;
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeFunction);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response_string);
-        curl_easy_setopt(curl, CURLOPT_HEADERDATA, &header_string);
 
         curl_easy_perform(curl);
         curl_easy_cleanup(curl);
@@ -44,6 +39,7 @@ QString getRequest(char* url){
     return response;
 }
 
+// Changing two-part query space to underscore
 std::string space2underscore(std::string text) {
     for(std::string::iterator it = text.begin(); it != text.end(); ++it) {
         if(*it == ' ') {
@@ -65,16 +61,16 @@ Barman::~Barman()
     delete ui;
 }
 
-
+// Search button
 void Barman::on_pushButton_clicked()
 {
-    ui->listWidget->clear();
-    QString queryQStr = ui->lineEdit->text();
-    QByteArray ba = queryQStr.toLocal8Bit();
+    ui->listWidget->clear(); //Clear list
+    QString queryQStr = ui->lineEdit->text(); //Getting query string
+    QByteArray ba = queryQStr.toLocal8Bit(); //Changing QString to QByteArray for chenage it to char
     const char *c_str2 = ba.data();
     char url[200] = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
     strncat(url, c_str2, 100);
-    QString res = getRequest(url);
+    QString res = getResponse(url);
 
     std::string respString = res.toUtf8().data();
     json j = json::parse(respString);
@@ -86,14 +82,14 @@ void Barman::on_pushButton_clicked()
 }
 
 
-
+//DoubleClick on list element handle
 void Barman::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
-    std::string stringText = space2underscore(item->text().toStdString());
+    std::string stringText = space2underscore(item->text().toStdString()); //Changeing spacer on underscore
     const char *c_str2 = stringText.c_str();
     char url[200] = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
     strncat(url, c_str2, 100);
-    QString res = getRequest(url);
+    QString res = getResponse(url);
     json j = json::parse(res.toStdString());
     std::string name = j["drinks"][0]["strDrink"];
     std::string instructions = j["drinks"][0]["strInstructions"];
@@ -107,6 +103,6 @@ void Barman::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
         ingredients += QString::fromStdString(j["drinks"][0]["strMeasure"+iStr]);
         ingredients += "\n";
     }
-    drinkInfo = new class drinkInfo(this, QString::fromStdString(name), QString::fromStdString(instructions),QString::fromStdString(imgUrl), ingredients);
+    drinkInfo = new class drinkInfo(this, QString::fromStdString(name), QString::fromStdString(instructions),QString::fromStdString(imgUrl), ingredients); //initialization drinkInfo window
     drinkInfo->show();
 }
