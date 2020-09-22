@@ -21,7 +21,4 @@ You can adding/deleting workers, searching drinks and getting ingredients, recip
 
 ## Author
 
-Bartosz Posert
-=======
-Studies project wrote in C++
->>>>>>> 475bce82a7e0128b5cfa5d82240b8f5d787e9814
+# Bartosz Posert
