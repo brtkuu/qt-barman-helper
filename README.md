@@ -1,5 +1,6 @@
 # Drink recipe helper
 
+<<<<<<< HEAD
 Studies projekt wrote in C++ and Qt. Can be use in pubs for help bartender in creating drinks.
 
 ## Technologies
@@ -21,3 +22,6 @@ You can adding/deleting workers, searching drinks and getting ingredients, recip
 ## Author
 
 Bartosz Posert
+=======
+Studies project wrote in C++
+>>>>>>> 475bce82a7e0128b5cfa5d82240b8f5d787e9814
