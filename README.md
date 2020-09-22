@@ -1,6 +1,5 @@
 # Drink recipe helper
 
-<<<<<<< HEAD
 Studies projekt wrote in C++ and Qt. Can be use in pubs for help bartender in creating drinks.
 
 ## Technologies
