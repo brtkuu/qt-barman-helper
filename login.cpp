@@ -6,13 +6,10 @@
 #include <mongocxx/uri.hpp>
 #include <mongocxx/instance.hpp>
 #include <mongocxx/options/insert.hpp>
-#include <cstdint>
-#include <vector>
 #include <bsoncxx/json.hpp>
 #include <json.hpp>
-#include <bsoncxx/builder/stream/helpers.hpp>
 #include <bsoncxx/builder/stream/document.hpp>
-#include <bsoncxx/builder/stream/array.hpp>
+
 
 using json = nlohmann::json;
 using bsoncxx::builder::basic::kvp;
@@ -41,6 +38,7 @@ Login::Login(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Login)
 {
+
     ui->setupUi(this);
     // Set password edit lines
     ui->lineEdit_2->setEchoMode(QLineEdit::Password);

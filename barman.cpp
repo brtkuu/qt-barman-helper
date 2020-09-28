@@ -14,7 +14,7 @@ size_t writeFunction(void* ptr, size_t size, size_t nmemb, std::string* data) {
     return size * nmemb;
 }
 
-// Get response from coctail api
+// Getting response from api
 QString getResponse(char* url){
     CURL* curl;
     QString response;
@@ -95,13 +95,18 @@ void Barman::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
     std::string instructions = j["drinks"][0]["strInstructions"];
     std::string imgUrl = j["drinks"][0]["strDrinkThumb"];
     QString ingredients = "";
-    for(int i=1; i<=3; i++ ){
+    for(int i=1; i<=15; i++ ){
         std::string iStr = std::to_string(i);
+        if(!j["drinks"][0]["strIngredient"+iStr].size()){
+               break;
+        }
         std::string ingredient = j["drinks"][0]["strIngredient"+iStr];
         ingredients += QString::fromStdString(ingredient);
-        ingredients += "-";
-        ingredients += QString::fromStdString(j["drinks"][0]["strMeasure"+iStr]);
-        ingredients += "\n";
+        if(j["drinks"][0]["strMeasure"+iStr].size()){
+            ingredients += " - ";
+            ingredients += QString::fromStdString(j["drinks"][0]["strMeasure"+iStr]);
+        }
+            ingredients += "\n";
     }
     drinkInfo = new class drinkInfo(this, QString::fromStdString(name), QString::fromStdString(instructions),QString::fromStdString(imgUrl), ingredients); //initialization drinkInfo window
     drinkInfo->show();
